@@ -180,7 +180,7 @@ contract StakingRewards is IStakingRewards, RewardsDistributionRecipient, Reentr
 
     function notifyRewardAmount(uint256 reward, uint256 rewardsDuration) external override onlyRewardsDistribution updateReward(address(0)) {
         require(block.timestamp.add(rewardsDuration) >= periodFinish, "Cannot reduce existing period");
-        
+    
         if (block.timestamp >= periodFinish) {
             rewardRate = reward.div(rewardsDuration);
         } else {
