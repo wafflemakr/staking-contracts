@@ -5,10 +5,16 @@
   "repository": "https://github.com/wafflemakr/staking-contracts",
   "author": "FELIPE <wafflemakr@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "compile": "hardhat compile"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-truffle5": "^2.0.0",
     "@nomiclabs/hardhat-web3": "^2.0.0",
     "dotenv": "^8.2.0",
     "hardhat": "^2.2.1"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "3.4.0"
   }
 }
