@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/utils/EnumerableSet.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./SushiToken.sol";
+import "hardhat/console.sol";
 
 interface IMigratorChef {
     // Perform LP token migration from legacy UniswapV2 to SushiSwap.
