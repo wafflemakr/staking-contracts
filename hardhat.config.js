@@ -5,6 +5,7 @@
 require("dotenv").config();
 require("@nomiclabs/hardhat-web3");
 require("@nomiclabs/hardhat-truffle5");
+require("hardhat-gas-reporter");
 
 module.exports = {
   networks: {
@@ -23,6 +24,12 @@ module.exports = {
         runs: 200,
       },
     },
+  },
+  gasReporter: {
+    currency: "USD",
+    gasPrice: 60,
+    enabled: true,
+    coinmarketcap: process.env.CMC_API_KEY,
   },
   mocha: {
     timeout: 240000,

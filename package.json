@@ -7,8 +7,9 @@
   "license": "MIT",
   "scripts": {
     "compile": "hardhat compile",
-    "test:sushi": "hardhat test tests/sushi.test.js",
-    "test:synth": "hardhat test tests/synthetix.test.js"
+    "test": "hardhat test ",
+    "test:sushi": "hardhat test test/sushi.test.js",
+    "test:synth": "hardhat test test/synthetix.test.js"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-truffle5": "^2.0.0",
@@ -16,7 +17,8 @@
     "@openzeppelin/test-helpers": "^0.5.11",
     "chai": "^4.3.4",
     "dotenv": "^8.2.0",
-    "hardhat": "^2.2.1"
+    "hardhat": "^2.2.1",
+    "hardhat-gas-reporter": "^1.0.4"
   },
   "dependencies": {
     "@openzeppelin/contracts": "3.4.0"
