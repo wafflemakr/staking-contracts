@@ -1,0 +1,14 @@
+{
+  "name": "staking-contracts",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/wafflemakr/staking-contracts",
+  "author": "FELIPE <wafflemakr@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomiclabs/hardhat-truffle5": "^2.0.0",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "dotenv": "^8.2.0",
+    "hardhat": "^2.2.1"
+  }
+}
