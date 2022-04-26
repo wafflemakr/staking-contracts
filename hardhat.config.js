@@ -20,6 +20,7 @@ module.exports = {
   },
   namedAccounts: {
     deployer: 0,
+    dev: 1,
   },
   solidity: {
     compilers: [

@@ -1,31 +1,32 @@
-const MasterChef = artifacts.require("MasterChef");
-const SushiToken = artifacts.require("SushiToken");
-const LPToken = artifacts.require("LPToken");
-
-const { BN, time } = require("@openzeppelin/test-helpers");
 const { expect } = require("chai");
-require("chai").use(require("chai-bn")(BN));
+const {
+  ethers,
+  deployments: { fixture },
+} = require("hardhat");
 
-contract("Master Chef", ([owner, dev, alice, bob, random]) => {
-  let masterChef, sushi, lp;
+const increaseBlocks = async (amount) => {
+  while (amount > 0) {
+    await ethers.provider.send("evm_mine");
+    amount--;
+  }
+};
 
+describe("Master Chef", () => {
   before(async function () {
-    sushi = await SushiToken.new();
-    lp = await LPToken.new();
+    [ownerSigner, aliceSigner, bobSigner] = await ethers.getSigners();
+    alice = aliceSigner.address;
+    bob = bobSigner.address;
 
-    /**
-        SushiToken _sushi,
-        address _devaddr,
-        uint256 _sushiPerBlock,
-        uint256 _startBlock,
-        uint256 _bonusEndBlock
-     */
-    masterChef = await MasterChef.new(sushi.address, dev, "100", "10", "100");
+    await fixture(["MasterChef", "LPToken"]);
 
-    await sushi.transferOwnership(masterChef.address, { from: owner });
+    sushi = await ethers.getContract("SushiToken");
+    lp = await ethers.getContract("LPToken");
+    masterChef = await ethers.getContract("MasterChef");
 
-    await lp.mint(alice, "1000", { from: owner });
-    await lp.mint(bob, "1000", { from: owner });
+    await sushi.transferOwnership(masterChef.address);
+
+    await lp.mint(alice, "1000");
+    await lp.mint(bob, "1000");
   });
 
   it("should add a new pool", async function () {
@@ -33,14 +34,15 @@ contract("Master Chef", ([owner, dev, alice, bob, random]) => {
   });
 
   it("should be able to stake LP tokens", async function () {
-    await lp.approve(masterChef.address, "100", { from: alice });
-    await masterChef.deposit(0, "100", { from: alice }); // pid 0
+    await lp.connect(aliceSigner).approve(masterChef.address, "100");
+    await masterChef.connect(aliceSigner).deposit(0, "100"); // pid 0
   });
 
   it("should be able to claim sushi rewards", async function () {
-    await time.advanceBlockTo(15);
-    await masterChef.deposit(0, "0", { from: alice }); // block 16
+    await increaseBlocks(5);
 
-    expect(await sushi.balanceOf(alice)).to.be.bignumber.equal("6000");
+    await masterChef.connect(aliceSigner).deposit(0, "0"); // block 16
+
+    expect(Number(await sushi.balanceOf(alice))).to.be.greaterThan(0);
   });
 });
