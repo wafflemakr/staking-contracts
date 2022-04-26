@@ -3,9 +3,11 @@
  */
 
 require("dotenv").config();
-require("@nomiclabs/hardhat-web3");
-require("@nomiclabs/hardhat-truffle5");
+require("@nomiclabs/hardhat-ethers");
+require("hardhat-deploy");
 require("hardhat-gas-reporter");
+require("@nomiclabs/hardhat-waffle");
+require("chai");
 
 module.exports = {
   networks: {
@@ -16,14 +18,30 @@ module.exports = {
       // },
     },
   },
+  namedAccounts: {
+    deployer: 0,
+  },
   solidity: {
-    version: "0.6.12",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
+    compilers: [
+      {
+        version: "0.6.12",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
       },
-    },
+      {
+        version: "0.5.16",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
+    ],
   },
   gasReporter: {
     currency: "USD",
